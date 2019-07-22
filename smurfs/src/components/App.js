@@ -61,8 +61,9 @@ class App extends Component {
     return (
       <div className="App">
         {smurfs.map(smurf => {
-          return <p><span key={smurf.id}>{smurf.name}</span>
+          return <p key={smurf.id}><span >{smurf.name}</span>
           <img
+            alt={`Delete id: ${smurf.id}`}
             id={smurf.id}
             onClick={this.handleDelete}
             src="https://img.icons8.com/material-sharp/24/000000/delete-forever.png"
