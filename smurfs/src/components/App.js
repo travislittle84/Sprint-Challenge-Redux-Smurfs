@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { getSmurfs, addSmurf } from '../actions/index'
+import { getSmurfs, addSmurf, deleteSmurf } from '../actions/index'
 
 
 class App extends Component {
@@ -39,18 +39,34 @@ class App extends Component {
       height: ''
     })
   }
+
+  handleDelete = (event) => {
+    event.preventDefault()
+    const idToDelete = event.target.id
+    this.props.deleteSmurf(idToDelete)
+  }
    
   render() {    
-    const { gettingSmurfs, smurfs } = this.props
+    const { gettingSmurfs, smurfs, deletingSmurf } = this.props
     
     if (gettingSmurfs) {
       return <p>Getting Smurfs..</p>
     }
+
+    if (deletingSmurf) {
+      return <p>Deleting smurf..</p>
+    }
+
     const { name, age, height } = this.state
     return (
       <div className="App">
         {smurfs.map(smurf => {
-          return <p key={smurf.id}>{smurf.name}</p>
+          return <p><span key={smurf.id}>{smurf.name}</span>
+          <img
+            id={smurf.id}
+            onClick={this.handleDelete}
+            src="https://img.icons8.com/material-sharp/24/000000/delete-forever.png"
+          /></p>
         })}
         <form onSubmit={this.handleSubmit}>
           <input type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange} />
@@ -68,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     gettingSmurfs: state.gettingSmurfs,
     errorMessage: state.errorMessage,
+    deletingSmurf: state.deletingSmurf,
     smurfs: state.smurfs,
   }
 }
@@ -75,6 +92,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getSmurfs: getSmurfs,
   addSmurf: addSmurf,
+  deleteSmurf: deleteSmurf
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

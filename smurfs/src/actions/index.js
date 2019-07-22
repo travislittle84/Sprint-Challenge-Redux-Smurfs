@@ -24,6 +24,10 @@ export const ADD_SMURF_START = 'ADD_SMURF_START'
 export const ADD_SMURF_SUCCESS = 'ADD_SMURF_SUCCESS'
 export const ADD_SMURF_FAILED = 'ADD_SMURF_FAILED'
 
+export const DELETE_SMURF_START = 'DELETE_SMURF_START'
+export const DELETE_SMURF_SUCCESS = 'DELETE_SMURF_SUCCESS'
+export const DELETE_SMURF_FAILED = 'DELETE_SMURF_FAILED'
+
 export function getSmurfs() {
   return (dispatch) => {
     dispatch({ type: GET_SMURFS_START })
@@ -45,12 +49,26 @@ export function addSmurf(smurf) {
 
     axios.post('http://localhost:3333/smurfs', smurf)
       .then((res) => {
-        console.log("RESPONSE CHECK", res.data)
         dispatch({ type: ADD_SMURF_SUCCESS, payload: res.data })
       })
       .catch((error) => {
         dispatch({ type: ADD_SMURF_FAILED, payload: error })
         console.log("Error when adding Smurf", error)
       })
+  }
+}
+
+export function deleteSmurf(id) {
+  return (dispatch) => {
+    dispatch({ type: DELETE_SMURF_START })
+
+    axios.delete(`http://localhost:3333/smurfs/${id}`)
+      .then((res) => {
+        dispatch({ type: DELETE_SMURF_SUCCESS, payload: res.data })
+      })
+      .catch((error => {
+        dispatch({ type: DELETE_SMURF_FAILED, payload: error })
+        console.log("Error deleting Smurf", error)
+      }))
   }
 }

@@ -5,12 +5,16 @@ import {
   ADD_SMURF_START,
   ADD_SMURF_SUCCESS,
   ADD_SMURF_FAILED,
+  DELETE_SMURF_START,
+  DELETE_SMURF_SUCCESS,
+  DELETE_SMURF_FAILED
 } from '../actions/index'
 
 const initialState = {
   smurfs: [],
   gettingSmurfs: false,
-  errorMessage: null
+  errorMessage: null,
+  deletingSmurf: false,
 }
 
 export default function (state = initialState, action) {
@@ -55,10 +59,31 @@ export default function (state = initialState, action) {
         addingSmurf: false,
         errorMessage: action.payload
       }
+    case DELETE_SMURF_START:
+      return {
+        ...state,
+        deletingSmurf: true,
+        errorMessage: null,
+      }
+    case DELETE_SMURF_SUCCESS:
+      const newListFromDelete = action.payload
+      return {
+        ...state,
+        deletingSmurf: false,
+        errorMessage: false,
+        smurfs: newListFromDelete
+      }
+    case DELETE_SMURF_FAILED:
+      return {
+        ...state,
+        deletingSmurf: false,
+        errorMessage: action.payload
+      }
     
     default:
       return state
   }
+  
 }
 
 
