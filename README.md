@@ -23,8 +23,11 @@ In this challenge, you are to build the Smurfs village once again, only this tim
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
+Reducers take actions, and updates the store with new data. Actions are accessed by the UI to send data to the reducers. The store is known as the single source of truth since that is where all state data lives. If store data changes, the data will reflect in all components connected to the store.
 - [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+Application state is the state data for the entire application which should be stored  in the Redux store. Component state is state data contained with that one component and is not stored in the application data. You don't need to store all data in application data, for instance you wouldn't need to store text box values into application data, not until the text box data is sent to the Redux store.
 - [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+Redux thunk unlocks Async Redux. It allows to do things like fetch data asynchronously. It changes action-creators to allow for promises. 
 
 ## Project Set Up
 
